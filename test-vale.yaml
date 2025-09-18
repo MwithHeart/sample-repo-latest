@@ -1,0 +1,40 @@
+name: Lint & Link Check
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Run Vale
+      # This uses a pre-built GitHub Action specifically made by the creators of Vale.
+      # It automatically installs Vale, runs it on your repo, and reports the results. 
+      # You don’t have to manually write curl or vale . — this action does it for you.
+      - name: Run Vale
+        uses: errata-ai/vale-action@v2.1.1
+    env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  link-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout repo
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Step 2: Install and run markdown-link-check
+      - name: Run markdown-link-check
+        uses: tcort/github-action-markdown-link-check@v1
+        with:
+          config-file: '.link-check-config.json'
+        continue-on-error: true
