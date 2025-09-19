@@ -22,3 +22,12 @@ jobs:
           format: markdown
           output: lychee/out.md
           fail: false    # don't fail the job — we'll create an issue instead
+
+    # (inside jobs.linkChecker.steps, after running lychee)
+      - name: Create Issue From File
+        if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: Link Checker Report
+          content-filepath: ./lychee/out.md
+          labels: report, automated

@@ -1,0 +1,8 @@
+# Ignore all LinkedIn links
+https:\/\/(www\.)?linkedin\.com\/.*
+
+# Ignore all Dribble links
+https:\/\/(www\.)?dribble\.com\/.*
+
+# Ignore a private internal URL
+https:\/\/example\.internal\/private
