@@ -1,0 +1,24 @@
+name: Link Checker
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  linkChecker:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write          # needed if you want to create issues from failures
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Run lychee
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --base . --verbose --no-progress './**/*.md' './**/*.html'
+          format: markdown
+          output: lychee/out.md
+          fail: false    # don't fail the job — we'll create an issue instead
